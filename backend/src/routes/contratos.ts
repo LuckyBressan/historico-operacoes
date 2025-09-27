@@ -1,26 +1,30 @@
 import type { FastifyInstance } from "fastify";
+import { getContratoParcelas, getContratos, getParcelas, postContratos, postMaiorValorAberto } from "../controllers/contratos-controller";
 
 export default async function contratosRoutes(app: FastifyInstance) {
 
     app.get(
         '/',
-        async (req, res) => {
-            
-        }
+        getContratos
+    )
+
+    app.get(
+        '/parcelas/:contratoId',
+        getContratoParcelas
     )
 
     app.get(
         '/parcelas',
-        async (req, res) => {
-
-        }
+        getParcelas
     )
 
-    app.get(
-        '/maximoValorAberto',
-        async (req, res) => {
-
-        }
+    app.post(
+        '/maiorValorAberto',
+        postMaiorValorAberto
     )
 
+    app.post(
+        '/',
+        postContratos
+    )
 }
