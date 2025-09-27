@@ -4,6 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src --out-dir build",
     "knex": "tsx ./node_modules/knex/bin/cli.js"
   },
   "keywords": [],
