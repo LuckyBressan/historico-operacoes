@@ -1,0 +1,113 @@
+{
+  "contratos": [
+    {
+      "parcelas": [
+        {
+          "valorvencimento": 210.50,
+          "datavencimento": "2021-03-15",
+          "dataultimopagamento": "2021-03-12",
+          "totalpago": 210.50,
+          "capitalaberto": 0
+        },
+        {
+          "valorvencimento": 210.50,
+          "datavencimento": "2021-04-15",
+          "dataultimopagamento": "2021-04-10",
+          "totalpago": 150.00,
+          "capitalaberto": 60.50
+        },
+        {
+          "valorvencimento": 210.50,
+          "datavencimento": "2021-05-15",
+          "dataultimopagamento": "2021-05-08",
+          "totalpago": 0,
+          "capitalaberto": 210.50
+        },
+        {
+          "valorvencimento": 210.50,
+          "datavencimento": "2021-06-15",
+          "dataultimopagamento": null,
+          "totalpago": 0,
+          "capitalaberto": 210.50
+        }
+      ],
+      "contrato": "0500000000000000000001669920210310",
+      "data": "2021-03-10",
+      "valortotal": 842,
+      "valorentrada": 0,
+      "valorfinanciado": 842
+    },
+    {
+      "parcelas": [
+        {
+          "valorvencimento": 65.30,
+          "datavencimento": "2019-09-20",
+          "dataultimopagamento": "2019-09-18",
+          "totalpago": 65.30,
+          "capitalaberto": 0
+        },
+        {
+          "valorvencimento": 65.30,
+          "datavencimento": "2019-10-20",
+          "dataultimopagamento": "2019-10-19",
+          "totalpago": 30.00,
+          "capitalaberto": 35.30
+        },
+        {
+          "valorvencimento": 65.30,
+          "datavencimento": "2019-11-20",
+          "dataultimopagamento": null,
+          "totalpago": 0,
+          "capitalaberto": 65.30
+        }
+      ],
+      "data": "2019-08-15",
+      "valortotal": 195.9,
+      "valorentrada": 0,
+      "valorfinanciado": 195.9
+    },
+    {
+      "parcelas": [
+        {
+          "valorvencimento": 120,
+          "datavencimento": "2020-01-10",
+          "dataultimopagamento": "2020-01-08",
+          "totalpago": 0,
+          "capitalaberto": 120
+        },
+        {
+          "valorvencimento": 120,
+          "datavencimento": "2020-02-10",
+          "dataultimopagamento": "2020-02-07",
+          "totalpago": 0,
+          "capitalaberto": 120
+        },
+        {
+          "valorvencimento": 120,
+          "datavencimento": "2020-03-10",
+          "dataultimopagamento": null,
+          "totalpago": 0,
+          "capitalaberto": 120
+        },
+        {
+          "valorvencimento": 120,
+          "datavencimento": "2020-04-10",
+          "dataultimopagamento": "2020-04-05",
+          "totalpago": 120,
+          "capitalaberto": 0
+        },
+        {
+          "valorvencimento": 120,
+          "datavencimento": "2020-05-10",
+          "dataultimopagamento": null,
+          "totalpago": 0,
+          "capitalaberto": 120
+        }
+      ],
+      "contrato": "0500001350004830000001669920191202",
+      "data": "2019-12-02",
+      "valortotal": 600,
+      "valorentrada": 0
+    }
+  ]
+}
