@@ -4,6 +4,9 @@ import { database } from "../database";
 import type { Contrato } from "../@types/contratos";
 import type { HistoricoParcelaAberto } from "../@types/generics";
 
+/**
+ * Método que retorna todos os contratos salvos no banco de dados
+ */
 export async function getContratos(
     req: FastifyRequest,
     res: FastifyReply
@@ -13,6 +16,9 @@ export async function getContratos(
     return { contratos }
 }
 
+/**
+ * Método que retorna todas as parcelas do contrato passado por parâmetro
+ */
 export async function getContratoParcelas(
     req: FastifyRequest,
     res: FastifyReply
@@ -29,6 +35,9 @@ export async function getContratoParcelas(
     return { parcelas }
 }
 
+/**
+ * Métdo que retorna todas as parcelas salvas no banco de dados
+ */
 export async function getParcelas(
     req: FastifyRequest,
     res: FastifyReply
@@ -143,32 +152,33 @@ export async function postMaiorValorAberto(
         }
     }
 
+    //Buscamos todos os anos que houveram contratos/parcelas
     const anos = await database('parcelas')
         .select<[{ ano: string }]>(database.raw("DISTINCT strftime('%Y', datavencimento) as ano"))
         .orderBy('ano')
 
     let maiorHistoricoParcelaAberto: HistoricoParcelaAberto = { mes_ano: '', total_aberto: 0 }
 
+    //percorremos ano a ano, procurando qual mês teve o maior valor em aberto
     for(let { ano } of anos) {
-        console.log(ano);
         (
-            await database<HistoricoParcelaAberto[]>('parcelas')
+            await database('parcelas')
                 .select(
                     database.raw("strftime('%m', datavencimento) || '/' || strftime('%Y', datavencimento) as mes_ano"),
                     database.raw("SUM(capitalaberto) as total_aberto")
                 )
-                .whereRaw("strftime('%Y', datavencimento) = ?", [ano])
+                .whereRaw("strftime('%Y', datavencimento) = ?", [ano]) //
                 .groupBy('mes_ano')
                 .orderBy('mes_ano')
         )
         .map((row: any) => {
-            console.log(row.total_aberto)
+            //Valida qual o mês de maior valor em aberto e armazena
             if( row.total_aberto > maiorHistoricoParcelaAberto.total_aberto ) {
                 maiorHistoricoParcelaAberto = row
             }
         })
     }
 
-    res.code(200).send({ maiorHistoricoParcelaAberto })
+    res.code(200).send(maiorHistoricoParcelaAberto)
 
 }
