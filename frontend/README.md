@@ -1,73 +1,116 @@
-# React + TypeScript + Vite
+# 📖 Frontend de Histórico de Parcelas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🛠️ Stack Tecnológica
 
-Currently, two official plugins are available:
+* **[React](https://react.dev/)** — biblioteca para construção de interfaces
+* **[Vite](https://vitejs.dev/)** — bundler rápido para desenvolvimento
+* **TypeScript** — tipagem estática para maior confiabilidade
+* **[TailwindCSS](https://tailwindcss.com/)** — estilização rápida e responsiva
+* **[shadcn/ui](https://ui.shadcn.com/)** — componentes reutilizáveis
+* Integração com API backend (Fastify + SQLite + Knex)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+***
 
-## React Compiler
+## 🚀 Funcionalidades Principais
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+* **Listagem de contratos e parcelas** em uma tela dedicada
+* **Upload de JSON** de contratos via campo de upload "draggable"
+* **Envio dos dados** para o backend via requisições HTTP
+* **Tela de análise**: permite solicitar o cálculo do maior valor em aberto, retornado pelo backend
 
-## Expanding the ESLint configuration
+***
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📂 Estrutura de Pastas
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+ ├── components/        # Componentes reutilizáveis (botões, cards, tabelas, etc.)
+ ├── pages/             # Páginas principais (Listagem, Upload, Análise)
+ ├── providers/         # Providers de dados consumindo a API
+ ├── services/          # Configuração de chamadas HTTP (axios)
+ ├── types/             # Definições TypeScript (ex: Contrato, Parcela)
+ ├── app.tsx            # Chamada do router e provider
+ ├── layout-main.tsx    # Rotas principais do app
+ └── main.tsx           # Entrada do React
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+***
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📌 Páginas
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 🔹 Listagem de Contratos
+
+* Exibe contratos e suas parcelas em formato de cards agrupadores, onde ao abrir um dos cards é feito uma requisição para a API retornar as parcelas do contrato em questão para então exibir em uma tabela.
+* Consome o endpoint **GET** **`/contratos`**.
+* Consome o endpoint **GET** **`/contratos/parcelas/:contratoId`**.
+
+![1.00](docs/images/tela-listagem.png)
+
+### 🔹 Adicionar Contratos via JSON
+
+* Tela com campo "drag & drop" para upload de arquivos JSON.
+* Faz parse/validação do JSON e envia para o endpoint **POST** **`/contratos`**.
+
+![1.00](docs/images/tela-upload.png)
+
+### 🔹 Análise de Maior Valor em Aberto
+
+* Botão para solicitar ao backend (endpoint **POST** **`/maiorValorAberto`**) a análise do maior valor em aberto.
+* Exibe o resultado em dois cards separados contendo o `mes_ano` e `total_aberto`:
+
+![1.00](docs/images/tela-analise.png)
+
+***
+
+## 🧪 Boas Práticas de Desenvolvimento
+
+* Separar componentes em **UI** e **lógica de negócio**
+* Utilizar **context customizado** para chamadas à API
+* Tipar todas as interfaces com **TypeScript**
+* Usar **ESLint + Prettier** para manter o código padronizado
+* Utilizar a referência do [design system](https://zeroheight.com/050afef2f/p/85a1b8-magic) na hora da montagem e estilização de componentes
+
+***
+
+## ▶️ Como rodar o projeto
+
+### 1. Instalar dependências
+
+```Shell
+npm install
 ```
+
+### 2. Rodar em desenvolvimento
+
+```Shell
+npm run dev
+```
+
+### 3. Build para produção
+
+```Shell
+npm run build
+```
+
+***
+
+## 📡 Integração com o Backend
+
+* A API backend deve estar rodando em `http://localhost:3333` (ajustável via `.env`).
+* Exemplo de `.env` no frontend:
+
+```
+VITE_PORT_BACKEND=3333
+```
+
+No código React:
+
+```TypeScript
+const api = axios.create({
+  baseURL: `http://localhost:${import.meta.env.VITE_PORT_BACKEND}/`,
+})
+```
+
+***
+
+📌 Essa documentação serve como **guia inicial** para entender a estrutura e o funcionamento do frontend.
