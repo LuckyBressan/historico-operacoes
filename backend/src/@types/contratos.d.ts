@@ -10,6 +10,10 @@ export interface Contrato {
     parcelas?: Parcela[];
 }
 
+export interface ContratoSelect extends Contrato {
+    status: number;
+}
+
 declare module "knex/types/tables" {
   export interface Tables {
     contratos: Omit<Contrato, 'parcelas'>;

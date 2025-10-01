@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 import { database } from "../database";
-import type { Contrato } from "../@types/contratos";
+import type { Contrato, ContratoSelect } from "../@types/contratos";
 import type { HistoricoParcelaAberto } from "../@types/generics";
 
 /**
@@ -11,7 +11,19 @@ export async function getContratos(
     req: FastifyRequest,
     res: FastifyReply
 ) {
-    const contratos = await database('contratos')
+    const contratos: ContratoSelect[] = await database('contratos as c')
+        .select(
+            'c.*',
+            database.raw(`
+                COALESCE((
+                    SELECT 1
+                      FROM parcelas p
+                     WHERE p.contratoId = c.contrato AND p.capitalaberto > 0
+                     LIMIT 1
+                ), 0) as status
+            `)
+        )
+        .orderBy('data', 'desc')
 
     return { contratos }
 }
