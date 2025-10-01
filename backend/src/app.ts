@@ -4,7 +4,7 @@ import cors from "@fastify/cors"
 
 export const app = fastify()
 
-await app.register(cors, {
+app.register(cors, {
     origin: true
 })
 
