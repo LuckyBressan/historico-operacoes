@@ -100,7 +100,12 @@ describe('Contratos routes', () => {
             const listContratosResponse = await request(app.server)
                 .get('/contratos')
 
-            const contratosSemParcela = contratos.map(({ parcelas, ...rest }) => rest)
+            const contratosSemParcela = contratos
+                .map(
+                    ({ parcelas, ...rest }) => (
+                        { ...rest, status: parcelas.some(parcela => parcela.capitalaberto > 0) ? 1 : 0 }
+                    )
+                )
 
             expect(listContratosResponse.body.contratos).toEqual(
                 expect.arrayContaining(contratosSemParcela)
