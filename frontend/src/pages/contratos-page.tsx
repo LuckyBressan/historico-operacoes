@@ -1,4 +1,9 @@
-import { FaCheckCircle, FaDollarSign, FaFileInvoiceDollar } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaDollarSign,
+  FaExclamationTriangle,
+  FaFileInvoiceDollar
+} from "react-icons/fa";
 import ContratosList from "../components/contratos-list";
 import { Card, CardContent } from "../components/ui/card";
 import { useContratosContext } from "../providers/contratos-provider";
@@ -6,12 +11,16 @@ import formataReal from "../utils/formata-real";
 import { ContratoStatusEnum } from "../enum/contrato-status-enum";
 
 export default function ContratosPage() {
-
   const { contratos } = useContratosContext();
 
-  const totalContratos      = contratos.reduce((sum, contrato) => sum + contrato.valortotal, 0)
-  const contratosAtivos     = contratos.filter(contrato => contrato.status == ContratoStatusEnum.ATIVO).length
-  const contratosConcluidos = contratos.length - contratosAtivos
+  const totalContratos = contratos.reduce(
+    (sum, contrato) => sum + contrato.valortotal,
+    0
+  );
+  const contratosAtivos = contratos.filter(
+    (contrato) => contrato.status == ContratoStatusEnum.ATIVO
+  ).length;
+  const contratosConcluidos = contratos.length - contratosAtivos;
 
   return (
     <div className="space-y-6">
@@ -88,7 +97,27 @@ export default function ContratosPage() {
           </CardContent>
         </Card>
       </div>
-      <ContratosList contratos={contratos} />
+      {contratos.length ? (
+        <ContratosList contratos={contratos} />
+      ) : (
+        <Card className="bg-card border-border p-3 sm:p-12">
+          <CardContent className="space-y-6">
+            <div className="flex flex-col gap-4 items-center justify-center">
+              <div className="p-3 bg-primary/20 rounded-lg">
+                <FaExclamationTriangle className="h-6 w-6 text-primary" />
+              </div>
+              <div className="flex flex-col justify-center items-center gap-3">
+                <h3 className="text-center">
+                  Não há contratos cadastrados!
+                </h3>
+                <p className="text-sm text-muted-foreground text-justify sm:text-center">
+                  Adicione contratos na tela de upload e os consulte por aqui ou faça sua análise de valores em aberto na tela de análise.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

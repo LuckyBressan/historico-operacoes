@@ -12,6 +12,10 @@ export default function Routes() {
       element: <LayoutMain />,
       children: [
         {
+          index: true,
+          element: <ContratosPage />
+        },
+        {
           path: '/contratos',
           element: <ContratosPage />
         },
