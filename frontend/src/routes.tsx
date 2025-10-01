@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import LayoutMain from './layout-main'
 import ContratosPage from './pages/contratos-page'
-import { UploadPage } from './pages/upload-page'
+import ContratosUploadPage from './pages/contratos-upload-page'
+import { ContratosAnalisePage } from './pages/contratos-analise-page'
 
 export default function Routes() {
 
@@ -16,11 +17,11 @@ export default function Routes() {
         },
         {
           path: '/upload',
-          element: <UploadPage />
+          element: <ContratosUploadPage />
         },
         {
           path: '/calcular',
-          element: <ContratosPage />
+          element: <ContratosAnalisePage />
         },
       ]
     }

@@ -1,14 +1,17 @@
-import { FaDollarSign, FaFileAlt } from "react-icons/fa";
+import { FaCheckCircle, FaDollarSign, FaFileInvoiceDollar } from "react-icons/fa";
 import ContratosList from "../components/contratos-list";
 import { Card, CardContent } from "../components/ui/card";
 import { useContratosContext } from "../providers/contratos-provider";
 import formataReal from "../utils/formata-real";
+import { ContratoStatusEnum } from "../enum/contrato-status-enum";
 
 export default function ContratosPage() {
 
   const { contratos } = useContratosContext();
 
-  const totalValue = contratos.reduce((sum, contrato) => sum + contrato.valortotal, 0)
+  const totalContratos      = contratos.reduce((sum, contrato) => sum + contrato.valortotal, 0)
+  const contratosAtivos     = contratos.filter(contrato => contrato.status == ContratoStatusEnum.ATIVO).length
+  const contratosConcluidos = contratos.length - contratosAtivos
 
   return (
     <div className="space-y-6">
@@ -42,7 +45,7 @@ export default function ContratosPage() {
               <div>
                 <p className="text-sm text-muted-foreground">Valor Total</p>
                 <p className="text-2xl font-bold text-foreground">
-                  {formataReal(totalValue)}
+                  {formataReal(totalContratos)}
                 </p>
               </div>
             </div>
@@ -53,14 +56,14 @@ export default function ContratosPage() {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-primary/20 rounded-lg">
-                <FaFileAlt className="h-6 w-6 text-primary" />
+                <FaFileInvoiceDollar className="h-6 w-6 text-primary" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">
                   Contratos Ativos
                 </p>
                 <p className="text-2xl font-bold text-foreground">
-                  {1}
+                  {contratosAtivos}
                 </p>
               </div>
             </div>
@@ -71,14 +74,14 @@ export default function ContratosPage() {
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-primary/20 rounded-lg">
-                <FaFileAlt className="h-6 w-6 text-primary" />
+                <FaCheckCircle className="h-6 w-6 text-primary" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">
                   Contratos Concluídos
                 </p>
                 <p className="text-2xl font-bold text-foreground">
-                  {2}
+                  {contratosConcluidos}
                 </p>
               </div>
             </div>
